@@ -1,0 +1,453 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ══════════════════════════════════════════════════════════════════
+   LegalDesk — "Chambers"
+   Paper and ink under good light.
+
+   Three laws govern colour in this product:
+     1. VIOLET IS MACHINE.  --ai and its relatives appear only on
+        AI-generated, AI-inferred or AI-proposed content. Never on a
+        button, never as decoration. A user learns "violet = a computer
+        said this" in one session; one violet button destroys that.
+     2. ACCENT IS POSITION AND COMMITMENT.  Verdigris marks where you
+        are and the single action that writes to the record. At most
+        one accent-filled control per screen region.
+     3. SEMANTIC COLOUR IS STATE, NEVER CATEGORY.  Courts, case types
+        and clients get typography and position, not colour. Colour is
+        spent entirely on urgency and status.
+
+   Type: sans for the system, serif for the law.
+   ══════════════════════════════════════════════════════════════════ */
+
+@theme inline {
+  /* ── Fonts ─────────────────────────────────────────────────────── */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* ── shadcn / base-ui contract ─────────────────────────────────── */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ── LegalDesk semantic surfaces ───────────────────────────────── */
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-sunken: var(--sunken);
+  --color-hover: var(--hover);
+  --color-selected: var(--selected);
+
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong: var(--border-strong);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+
+  /* ── Law 1: machine ────────────────────────────────────────────── */
+  --color-ai: var(--ai);
+  --color-ai-subtle: var(--ai-subtle);
+  --color-ai-border: var(--ai-border);
+
+  /* ── Law 3: state ──────────────────────────────────────────────── */
+  --color-success: var(--success);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning: var(--warning);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-warning-border: var(--warning-border);
+  --color-danger: var(--danger);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-info: var(--info);
+
+  /* ── Radius: documents have corners ────────────────────────────── */
+  --radius-sm: 4px;   /* inputs, buttons, chips, cells */
+  --radius-md: 6px;
+  --radius-lg: 8px;   /* cards, panels, popovers */
+  --radius-xl: 12px;  /* modals, palette, sheets */
+  --radius-2xl: 16px;
+  --radius-3xl: 20px;
+  --radius-4xl: 24px;
+
+  /* ── Motion: continuity and feedback only ──────────────────────── */
+  --ease-out-quint: cubic-bezier(0.2, 0, 0, 1);
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Chambers Day (light)
+   ══════════════════════════════════════════════════════════════════ */
+:root {
+  --canvas: #FBFAF8;
+  --surface: #FFFFFF;
+  --raised: #FFFFFF;
+  --sunken: #F3F1ED;
+  --hover: #F1EFEA;
+  --selected: #EAF2EF;
+
+  --border-subtle: #EAE7E1;
+  --border-default: #DDD9D1;
+  --border-strong: #C4BEB3;
+
+  --text-primary: #1A1815;
+  --text-secondary: #5C574E;
+  --text-tertiary: #8A8377;
+
+  --ai: #6B4FD8;
+  --ai-subtle: #EFEBFC;
+  --ai-border: #D3C7F5;
+
+  --success: #2E7D4F;
+  --success-subtle: #E6F1EA;
+  --warning: #B26B00;
+  --warning-subtle: #FBF0DD;
+  --warning-border: #E8CFA0;
+  --danger: #B3261E;
+  --danger-subtle: #FBE9E7;
+  --info: #2A5DA8;
+
+  /* shadcn contract mapped onto the palette above */
+  --background: var(--canvas);
+  --foreground: var(--text-primary);
+  --card: var(--surface);
+  --card-foreground: var(--text-primary);
+  --popover: var(--raised);
+  --popover-foreground: var(--text-primary);
+  --primary: #0F6B5C;
+  --primary-foreground: #FFFFFF;
+  --secondary: var(--sunken);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--sunken);
+  --muted-foreground: var(--text-secondary);
+  --accent: var(--hover);
+  --accent-foreground: var(--text-primary);
+  --destructive: var(--danger);
+  --destructive-foreground: #FFFFFF;
+  --border: var(--border-subtle);
+  --input: var(--border-default);
+  --ring: #0F6B5C;
+
+  --sidebar: var(--sunken);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: #0F6B5C;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: var(--selected);
+  --sidebar-accent-foreground: #0F6B5C;
+  --sidebar-border: var(--border-subtle);
+  --sidebar-ring: #0F6B5C;
+
+  --radius: 0.5rem;
+
+  /* Density — a user preference, not a breakpoint. See [data-density]. */
+  --row-height: 32px;
+  --row-height-lg: 44px;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Chambers Night (dark) — not an inversion.
+   Warm ink base, never #000. Elevation goes lighter AND bordered,
+   because shadows barely read on dark surfaces.
+   ══════════════════════════════════════════════════════════════════ */
+.dark {
+  --canvas: #131211;
+  --surface: #1A1918;
+  --raised: #232120;
+  --sunken: #0E0D0D;
+  --hover: #262423;
+  --selected: #17302B;
+
+  --border-subtle: #2A2827;
+  --border-default: #373432;
+  --border-strong: #4A4643;
+
+  --text-primary: #EDE9E3;   /* not white — pure white halates at 14px */
+  --text-secondary: #A39D94;
+  --text-tertiary: #736D65;   /* 3.6:1 on --surface; the floor for UI icons */
+
+  --ai: #9B87F0;
+  --ai-subtle: #231C3D;
+  --ai-border: #3A3244;
+
+  --success: #4CAF7A;
+  --success-subtle: #12291D;
+  --warning: #D99A2B;
+  --warning-subtle: #241C0C;
+  --warning-border: #4A3818;
+  --danger: #E0685E;
+  --danger-subtle: #2B1614;
+  --info: #6E9BD8;
+
+  --background: var(--canvas);
+  --foreground: var(--text-primary);
+  --card: var(--surface);
+  --card-foreground: var(--text-primary);
+  --popover: var(--raised);
+  --popover-foreground: var(--text-primary);
+  --primary: #3EA88F;
+  --primary-foreground: #07201B;
+  --secondary: var(--raised);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--raised);
+  --muted-foreground: var(--text-secondary);
+  --accent: var(--hover);
+  --accent-foreground: var(--text-primary);
+  --destructive: var(--danger);
+  --destructive-foreground: #1A0F0E;
+  --border: var(--border-subtle);
+  --input: var(--border-default);
+  --ring: #3EA88F;
+
+  /* The rail is DARKER than the canvas in dark mode — it recedes by
+     depth, where in light mode it recedes by being greyer. */
+  --sidebar: var(--sunken);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: #3EA88F;
+  --sidebar-primary-foreground: #07201B;
+  --sidebar-accent: var(--selected);
+  --sidebar-accent-foreground: #3EA88F;
+  --sidebar-border: var(--border-subtle);
+  --sidebar-ring: #3EA88F;
+}
+
+@layer base {
+  /* NOTE: the previous rule applied `transition-colors duration-200` to
+     `*`. That animated every table row hover and every streaming token,
+     which the motion spec forbids and which costs real frames on a
+     300-row table. Transitions are now opt-in per component. */
+  * {
+    border-color: color-mix(in oklab, var(--border) 80%, transparent);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  html {
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  /* Focus is never removed. 2px accent at 2px offset reads on both
+     the light paper and the dark ink. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* Dates, case numbers and amounts must align vertically to be
+     scannable in a list. */
+  table, .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  /* Legal prose. The measure cap is not decorative: it is the
+     difference between a reading environment and a text box. */
+  .prose-legal {
+    font-family: var(--font-serif);
+    font-size: 15.5px;
+    line-height: 1.72;
+    max-width: 68ch;
+    color: var(--text-primary);
+  }
+
+  .prose-legal-sm {
+    font-family: var(--font-serif);
+    font-size: 14.5px;
+    line-height: 1.62;
+    color: var(--text-primary);
+  }
+
+  /* Section labels. Sentence-case at 12px; ALL CAPS only at 11px
+     with tracking, never smaller. */
+  .label-caption {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+  }
+
+  /* Law 1 made mechanical: anything AI-authored carries this mark. */
+  .ai-marked {
+    border-left: 2px solid var(--ai);
+  }
+
+  .row-h { height: var(--row-height); }
+  .row-h-lg { height: var(--row-height-lg); }
+}
+
+/* Density is a user preference stored in settings, not a breakpoint.
+   A lawyer with 300 matters chooses compact and expects it everywhere. */
+[data-density="compact"] { --row-height: 28px; --row-height-lg: 38px; }
+[data-density="comfortable"] { --row-height: 40px; --row-height-lg: 52px; }
+
+/* No exceptions, including the command palette. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Viasocket Embed Widget Layout Overrides ──────────────────────
+   Third-party surface we do not control. Retinted to the Chambers
+   palette so it reads as part of the product rather than a foreign
+   panel. Per the blueprint this moves to Settings → Automations; the
+   overrides stay until that move lands. */
+#iframe-viasocket-embed-parent-container {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: auto !important;
+  width: 600px !important;
+  max-width: 90vw !important;
+  height: 100vh !important;
+  background: var(--surface) !important;
+  border-left: 1px solid var(--border-subtle) !important;
+  box-shadow: -16px 0 48px rgba(0, 0, 0, 0.5) !important;
+  z-index: 999999 !important;
+  flex-direction: column !important;
+}
+
+#iframe-viasocket-embed-parent-container:not([class*="viasocket-display-none"]) {
+  display: flex !important;
+  visibility: visible !important;
+}
+
+#iframe-viasocket-embed-parent-container[class*="viasocket-display-none"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+#viasocket-embed-header {
+  height: 56px !important;
+  padding: 0 16px !important;
+  background: var(--raised) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  color: var(--text-primary) !important;
+}
+
+.viasocket-button-group {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+#viasocket-embed-iframe-component {
+  flex: 1 !important;
+  width: 100% !important;
+  height: calc(100% - 56px) !important;
+  border: none !important;
+  background: var(--canvas) !important;
+}
+
+.viasocket-header button {
+  background: var(--hover) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: 4px !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: background 120ms var(--ease-out-quint) !important;
+}
+
+.viasocket-header button:hover {
+  background: var(--border-subtle) !important;
+}
+
+.viasocket-label {
+  font-size: 11px !important;
+  color: var(--text-tertiary) !important;
+  margin: 0 !important;
+}
+
+/* Automations are a configuration surface, not AI output — so this
+   label uses the accent, not the violet. Law 1. */
+.viasocket-label-head {
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────
+   These remain as a floor. Per Part 12 of the blueprint, mobile
+   layouts become explicit shell variants rather than desktop
+   overrides, screen by screen — reactive collapsing has a low
+   quality ceiling. */
+@media (max-width: 767px) {
+  #iframe-viasocket-embed-parent-container {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    border-left: none !important;
+  }
+
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html, body {
+    overscroll-behavior: none;
+  }
+
+  [data-radix-popper-content-wrapper] {
+    max-width: calc(100vw - 2rem) !important;
+  }
+}
+
+/* ── Safe area insets for notched phones ──────────────────────────── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .mobile-bottom-bar {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
