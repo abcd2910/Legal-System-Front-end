@@ -5,6 +5,8 @@ import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { cases as casesApi, documents as docsApi, chat as chatApi, tools as toolsApi } from '@/lib/api';
 import type { CaseStatus, CaseRole, CaseUpdateBody } from '@/lib/api';
+import { UsageMeter } from '@/components/UsageMeter';
+import { EMPTY_TOTALS, addUsage, parseUsage, priceUsage, type PricedUsage, type UsageTotals } from '@/lib/usage';
 import { useEmbedScriptLoader } from '@/lib/useEmbedScriptLoader';
 import { useViasocketEvents } from '@/lib/useViasocketEvents';
 import { Button } from '@/components/ui/button';
@@ -48,6 +50,10 @@ export default function CaseDetailPage() {
   const [activeThread, setActiveThread] = useState<any | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const [chatInput, setChatInput] = useState('');
+  // Live usage readout for this browsing session. Not a billing record —
+  // the server captures the same events; see src/lib/usage.ts.
+  const [usageTotals, setUsageTotals] = useState<UsageTotals>(EMPTY_TOTALS);
+  const [lastUsage, setLastUsage] = useState<PricedUsage | null>(null);
   const [sendingMsg, setSendingMsg] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -342,6 +348,16 @@ export default function CaseDetailPage() {
             }
             return updated;
           });
+        },
+        // The Gateway reports token counts and its own computed cost here, on
+        // the terminal `done` event. Anything unrecognised is discarded rather
+        // than counted as zero, which would quietly under-report.
+        (raw) => {
+          const usage = parseUsage(raw);
+          if (!usage) return;
+          const priced = priceUsage(usage);
+          setLastUsage(priced);
+          setUsageTotals(prev => addUsage(prev, priced));
         }
       );
     } catch (err: any) {
@@ -674,6 +690,9 @@ export default function CaseDetailPage() {
       {/* Chat Input */}
       {activeThread && (
         <div className="p-3 md:p-4 border-t border-white/5 bg-card/20 backdrop-blur-xl shrink-0">
+          <div className="max-w-3xl mx-auto mb-2">
+            <UsageMeter totals={usageTotals} last={lastUsage} />
+          </div>
           <div className="flex gap-2 md:gap-3 max-w-3xl mx-auto">
             <Input
               placeholder="Ask about your case..."
